@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 @RequiredArgsConstructor
 public class LogoutService implements LogoutHandler {
 
-
+    private final JwtService jwtService;
     @Override
     public void logout(
             HttpServletRequest request,
@@ -27,6 +27,7 @@ public class LogoutService implements LogoutHandler {
             return;
         }
         jwt = authHeader.substring(7);
+
         SecurityContextHolder.clearContext();
     }
 }

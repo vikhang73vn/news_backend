@@ -1,7 +1,11 @@
 package com.erp.backend.services;
 
+import com.erp.backend.dtos.ArticleDto;
 import com.erp.backend.dtos.UserDto;
+import com.erp.backend.dtos.mappers.ArticleDTOMapper;
 import com.erp.backend.dtos.mappers.UserDTOMapper;
+import com.erp.backend.entities.Article;
+import com.erp.backend.entities.FavoriteArticle;
 import com.erp.backend.entities.User;
 import com.erp.backend.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +20,8 @@ public class UserService implements IUserService {
     private UserRepository userRepository;
     @Autowired
     private UserDTOMapper userDTOMapper;
+    @Autowired
+    ArticleDTOMapper articleDTOMapper;
 
 
     public List<UserDto> getAll() {
@@ -31,6 +37,16 @@ public class UserService implements IUserService {
     public UserDto getUserById(Long id) {
         return userRepository.findById(id).map(userDTOMapper::apply).orElse(null);
     }
+    public List<ArticleDto> getArticleFollows(String email){
+        User user = userRepository.findByEmail(email).get();
+             //   .orElseThrow(() -> new RuntimeException("User not found"));
+            // Trả về danh sách bài viết mà người dùng đã follow
+            return user.getFavoriteArticles().stream()
+                    .map(FavoriteArticle::getArticle)
+                    .collect(Collectors.toList()).stream().map(articleDTOMapper::apply).collect(Collectors.toList());
+
+        }
+
 
 
 }

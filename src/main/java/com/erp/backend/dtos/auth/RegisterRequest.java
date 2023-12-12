@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.Date;
 
 @Data
@@ -17,13 +18,13 @@ public class RegisterRequest {
 
   @Email(message = "invalid email address")
   @NotNull(message = "Email is required")
-  private String email;
 
+  private String email;
+  @Size(min = 8)
   @NotNull(message = "Password is required")
   private String password;
 
   private String name;
   private String phone;
-  private String address;
-  private Date birthday;
+
 }
