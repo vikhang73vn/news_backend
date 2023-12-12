@@ -27,5 +27,10 @@ public class UserController {
     public ResponseEntity<?> getAll(){
         return ResponseEntity.ok(userService.getAll());
     }
+    @GetMapping("/follows")
+    public  ResponseEntity<?> getFollowsArticle (@RequestAttribute("email") String email){
+return  ResponseEntity.ok(userService.getArticleFollows(email));
+
+    }
 
 }
